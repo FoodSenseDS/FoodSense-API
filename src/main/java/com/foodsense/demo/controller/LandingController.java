@@ -11,7 +11,7 @@ public class LandingController {
 
     @GetMapping("/")
     public ResponseEntity<String> home(){
-        String welcome_message = "Welcome to the FoodSense API!🙏";
+        String welcome_message = "Welcome to the FoodSense API!🙏, This API runs on azure spring apps";
         return ResponseEntity.ok(welcome_message);
     }
 }

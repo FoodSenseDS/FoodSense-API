@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 import com.foodsense.demo.enumeration.RoleCategory;
 
 @Entity
-@Table(name="customers")
+@Table(name="customer")
 public class Customer extends User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
