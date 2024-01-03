@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ public class AdminController {
 
     private static final Logger log =  LoggerFactory.getLogger(AdminController.class);
 
-    @GetMapping("/get")
+    @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Admin>> findAllAdmin(){
         log.info("Fetching all admin...");
         List<Admin> admins = adminDAO.findAllAdmin();
@@ -40,7 +41,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping(value = "/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Admin> findAdminByID(@PathVariable int id){
         log.info("Searching admin with ID: {}", id);
         Admin admin = adminDAO.findAdminByID(id);
@@ -53,7 +54,7 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/insert")
+    @PostMapping(value = "/insert", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> insertAdmin(@RequestBody Admin admin){
         log.info("Creating admin account...");
         int result = adminDAO.insertAdmin(admin);
@@ -66,7 +67,7 @@ public class AdminController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteAdminByID(@PathVariable int id){
         log.info("Searching for admin with ID: {}", id);
         int result = adminDAO.deleteAdminByID(id);
@@ -79,7 +80,7 @@ public class AdminController {
         }
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateAdminByID(@RequestBody Admin admin, @PathVariable int id){
         log.info("Updating admin with ID: {}", id);
         int result = adminDAO.updateAdminByID(admin, id);

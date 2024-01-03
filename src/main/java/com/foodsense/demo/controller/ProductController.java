@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +36,7 @@ public class ProductController {
 
     private static final Logger log = LoggerFactory.getLogger(ProductController.class);
 
-    @GetMapping("/get")
+    @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Product>> findAllProduct(){
         log.info("Fetching all product...");
         List<Product> products = productDAO.findAllProduct();
@@ -49,7 +50,7 @@ public class ProductController {
     }
 
 
-    @GetMapping("/get/{id}")
+    @GetMapping(value = "/get/{id}",  produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Product> findProductByID(@PathVariable int id){
         log.info("Searching for product with ID: {}", id);
         Product product = productDAO.findProductByID(id);
@@ -62,7 +63,7 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/insert")
+    @PostMapping(value = "/insert",  produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> insertProduct(@RequestParam(name="sellerId") long id, @RequestBody Product product){
         log.info("Inserting new product...");
         int result = productDAO.insertProduct(product, id);
@@ -75,7 +76,7 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}",  produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteProductByID(@PathVariable int id){
         log.info("Searching for product with ID: {}", id);
         int result = productDAO.deleteProductByID(id);
@@ -88,7 +89,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping(value="/update/image/{id}", consumes={"multipart/form-data"})
+    @PutMapping(value="/update/image/{id}", consumes={"multipart/form-data"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> uploadImage(@PathVariable int id, @RequestPart("file") MultipartFile file){
         try {
             log.info("Uploading product with ID {} image", id);
@@ -116,7 +117,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping(value = "/update/{id}",  produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateProductInfoByID(@RequestBody Product product, @PathVariable int id){
         log.info("Updating product by ID: {}", id);
         int result = productDAO.updateProductInfoByID(product, id);
@@ -129,7 +130,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/update/stock/{id}")
+    @PutMapping(value = "/update/stock/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateProductStockByID(@RequestBody Product product, @PathVariable int id){
         log.info("Updating stock of product with ID: {}", id);
         int result = productDAO.updateProductStockByID(product, id);

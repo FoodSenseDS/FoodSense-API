@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 @RestController
 @RequestMapping("/foodsense/api/v0.0.1/seller")
@@ -35,7 +36,7 @@ public class SellerController {
 
     private static final Logger log = LoggerFactory.getLogger(SellerController.class);
 
-    @GetMapping("/get")
+    @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Seller>> findAllSellers(){
         log.info("Fetching all sellers...");
         List<Seller> sellers = sellerDAO.findAllSeller();
@@ -48,7 +49,7 @@ public class SellerController {
         }
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping(value = "/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Seller> findSellerByID(@PathVariable int id){
         log.info("Searching for seller with ID: {}", id);
         Seller seller = sellerDAO.findSellerByID(id);
@@ -61,7 +62,7 @@ public class SellerController {
         }
     }
 
-    @PostMapping("/insert")
+    @PostMapping(value = "/insert", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> insertSeller(@RequestBody Seller seller){
         log.info("Creating seller account...");
         int result = sellerDAO.insertSeller(seller);
@@ -74,7 +75,7 @@ public class SellerController {
         }
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteSellerByID(@PathVariable int id) {
         log.info("Searching for seller with ID: {}", id);
         int result = sellerDAO.deleteSellerByID(id);
@@ -87,7 +88,7 @@ public class SellerController {
         }
     }
 
-    @PutMapping(value="/update/image/{id}", consumes={"multipart/form-data"})
+    @PutMapping(value="/update/image/{id}", consumes={"multipart/form-data"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> uploadImage(@PathVariable int id, @RequestPart("file") MultipartFile file) {
         try {
             log.info("Updloading seller with ID {} image", id);
@@ -116,7 +117,7 @@ public class SellerController {
         }
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateSellerByID(@RequestBody Seller seller, @PathVariable int id){
         log.info("Updating seller by ID: {}", id);
         int result = sellerDAO.updateSellerByID(seller, id);

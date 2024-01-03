@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 @RestController
 @RequestMapping("/foodsense/api/v0.0.1/customer")
@@ -35,7 +36,7 @@ public class CustomerController {
 
     private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
 
-    @GetMapping("/get")
+    @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Customer>> findAllCustomers(){
         log.info("Fetching all customers...");
         List<Customer> customers = customerDAO.findAllCustomer();
@@ -48,7 +49,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping(value = "/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Customer> findCustomerByID(@PathVariable int id){
         log.info("Searching for customer with ID: {}", id);
         Customer customer = customerDAO.findCustomerByID(id);
@@ -61,7 +62,7 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("/insert")
+    @PostMapping(value = "/insert", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> insertCustomer(@RequestBody Customer customer){
         log.info("Creating customer account...");
         int result = customerDAO.insertCustomer(customer);
@@ -74,7 +75,7 @@ public class CustomerController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteCustomerByID(@PathVariable int id){
         log.info("Searching for customer with ID: {}", id);
         int result = customerDAO.deleteCustomerByID(id);
@@ -88,7 +89,7 @@ public class CustomerController {
     } 
 
     
-    @PutMapping(value="/update/image/{id}", consumes={"multipart/form-data"})
+    @PutMapping(value="/update/image/{id}", consumes={"multipart/form-data"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> uploadImage(@PathVariable int id, @RequestPart("file") MultipartFile file){
         try {
             log.info("Uploading customer with ID {} image", id);
@@ -118,7 +119,7 @@ public class CustomerController {
     }
 
 
-    @PutMapping("/update/{id}")
+    @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateCustomerByID(@RequestBody Customer customer, @PathVariable int id){
         log.info("Updating customer by ID: {}", id);
         int result = customerDAO.updateCustomerByID(customer, id);

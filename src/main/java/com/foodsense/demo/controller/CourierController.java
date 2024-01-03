@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +36,7 @@ public class CourierController {
 
     private static final Logger log = LoggerFactory.getLogger(CourierController.class);
 
-    @GetMapping("/get")
+    @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Courier>> findAllCourier(){
         log.info("Fetching all courier...");
         List<Courier> couriers = courierDAO.findAllCourier();
@@ -48,7 +49,7 @@ public class CourierController {
         }
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping(value = "/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Courier> findCourierByID(@PathVariable int id){
         log.info("Searching for courier with ID: {}", id);
         Courier courier = courierDAO.findCourierByID(id);
@@ -61,7 +62,7 @@ public class CourierController {
         }
     }
 
-    @PostMapping("/insert")
+    @PostMapping(value = "/insert", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> insertCourier(@RequestBody Courier courier){
         log.info("Creating courier account...");
         int result = courierDAO.insertCourier(courier);
@@ -74,7 +75,7 @@ public class CourierController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteCourierByID(@PathVariable int id){
         log.info("Searching for courier with ID: {}", id);
         int result = courierDAO.deleteCourierByID(id);
@@ -87,7 +88,7 @@ public class CourierController {
         }
     }
 
-    @PutMapping(value="/update/image/{id}", consumes={"multipart/form-data"})
+    @PutMapping(value="/update/image/{id}", consumes={"multipart/form-data"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> uploadImage(@PathVariable int id, @RequestPart("file") MultipartFile file){
         try {
             log.info("Uploading courier with ID {} iamge", id);
@@ -116,7 +117,7 @@ public class CourierController {
         }
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateCourierByID(@RequestBody Courier courier, @PathVariable int id){
         log.info("Updating courier bu ID: {}", id);
         int result = courierDAO.updateCourierByID(courier, id);

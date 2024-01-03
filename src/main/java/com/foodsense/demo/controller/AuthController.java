@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +23,7 @@ public class AuthController {
 
     private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
-    @PostMapping("/register")
+    @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> registerUser(@RequestBody User user){
         log.info("Registering user...");
         int result = authDAO.register(user.getEmail(), user.getPassword(), user.getphone_number(), user.getFullName(), user.getAddress(), user.getRole());
@@ -35,7 +36,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/login")
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> loginUser(@RequestBody User user) {
         log.info("Attempting user login...");
         User result = authDAO.login(user.getEmail(), user.getPassword(), user.getRole());

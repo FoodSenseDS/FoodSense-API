@@ -35,7 +35,7 @@ public class Courier extends User{
 
     public Courier(long courier_id, String email, String password, String phoneNo, String fullname, String address, RoleCategory role, String imageUrl, boolean onDelivery){
         super(email, password, phoneNo, fullname, address, role);
-        // setCourierId(courier_id);
+        setCourierId(courier_id);
         setImageUrl(imageUrl);
         setOnDelivery(onDelivery);
     }
@@ -48,9 +48,9 @@ public class Courier extends User{
         return courier_id;
     }
 
-    // public void setCourierId(long courier_id){
-    //     this.courier_id = courier_id;
-    // }
+    public void setCourierId(long courier_id){
+        this.courier_id = courier_id;
+    }
 
     // public void orderDelivered(List<Order> orders){
     //     this.deliveredOrder=orders;
