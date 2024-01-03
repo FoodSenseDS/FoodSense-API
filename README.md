@@ -25,16 +25,16 @@ Take a look at this **POSTMAN** documentation to see the endpoint:
 [Seller Handler CRUD](https://documenter.getpostman.com/view/25551317/2s9YsFEEeS)
 
 ### Handle Courier Request
-[Courier Handler CRUD]()
+[Courier Handler CRUD](https://documenter.getpostman.com/view/25551317/2s9YsFEuTV)
 
 ### Handle Admin Request
-[Admin Handler CRUD]()
+[Admin Handler CRUD](https://documenter.getpostman.com/view/25551317/2s9YsFEuXm)
 
 ### Handle Authentification Request
-[Authentification Handler]()
+[Authentification Handler](https://documenter.getpostman.com/view/25551317/2s9YsFEuXo)
 
 ### Handle Product Request 
-[Product Handler]()
+[Product Handler](https://documenter.getpostman.com/view/25551317/2s9YsFEuXv)
 
 ### Handle Order Request
 [Order Handler]()
