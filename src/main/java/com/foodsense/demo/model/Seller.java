@@ -27,8 +27,7 @@ public class Seller extends User{
     @Column(name = "image_url")
     private String imageUrl;
 
-    // @Column(name="product")
-    @OneToMany(mappedBy="seller", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy="seller", cascade=CascadeType.REMOVE, fetch=FetchType.LAZY)
     @JsonIgnoreProperties("Seller")
     private List<Product> product;
 
@@ -41,15 +40,10 @@ public class Seller extends User{
         setImageUrl(imageUrl);
     }
 
+    //Constructor used in register auth
     public Seller(String email, String password, String phoneNo, String fullname, String address, RoleCategory role){
         super(email, password, phoneNo, fullname, address, role);
     }
-
-    //Seller Register Product in Database
-    // public Seller(String email, String password, String phoneNo, String fullname, String address, RoleCategory role, List<Product> product){
-    //     super(email, password, phoneNo, fullname, address, role);
-    //     setProduct(product);
-    // }
 
     public void setSellerId(long seller_id){
         this.seller_id = seller_id;

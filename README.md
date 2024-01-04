@@ -37,7 +37,7 @@ Take a look at this **POSTMAN** documentation to see the endpoint:
 [Product Handler](https://documenter.getpostman.com/view/25551317/2s9YsFEuXv)
 
 ### Handle Order Request
-[Order Handler]()
+[Order Handler](https://documenter.getpostman.com/view/25551317/2s9YsGhszJ)
 
 ### Handle Promo Request
 [Promo Handler]()

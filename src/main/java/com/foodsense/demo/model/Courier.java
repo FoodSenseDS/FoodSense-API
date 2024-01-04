@@ -1,16 +1,17 @@
 package com.foodsense.demo.model;
 
-// import java.util.List;
-
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import com.foodsense.demo.enumeration.RoleCategory;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -28,8 +29,9 @@ public class Courier extends User{
     @Column(name="image_url")
     private String imageUrl;
 
-    // @Column(name="delivered_order")
-    // private List<Order> deliveredOrder;
+    @OneToOne(mappedBy="courier", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JsonIgnoreProperties("courier")
+    private Order deliveredOrder;
 
     public Courier(){}
 
@@ -44,6 +46,14 @@ public class Courier extends User{
         super(email, password, phoneNo, fullname, address, role);
     }
 
+    public Order getDeliveredOrder(){
+        return deliveredOrder;
+    }
+
+    public void setDeliveredOrder(Order delivereOrder){
+        this.deliveredOrder = delivereOrder;
+    } 
+
     public long getCourierId(){
         return courier_id;
     }
@@ -51,10 +61,6 @@ public class Courier extends User{
     public void setCourierId(long courier_id){
         this.courier_id = courier_id;
     }
-
-    // public void orderDelivered(List<Order> orders){
-    //     this.deliveredOrder=orders;
-    // }
 
     public void setImageUrl(String imageUrl){
         this.imageUrl = imageUrl;

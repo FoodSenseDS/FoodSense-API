@@ -51,7 +51,7 @@ public class ProductController {
 
 
     @GetMapping(value = "/get/{id}",  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Product> findProductByID(@PathVariable int id){
+    public ResponseEntity<Product> findProductByID(@PathVariable long id){
         log.info("Searching for product with ID: {}", id);
         Product product = productDAO.findProductByID(id);
         if (product != null) {
@@ -77,7 +77,7 @@ public class ProductController {
     }
 
     @DeleteMapping(value = "/delete/{id}",  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> deleteProductByID(@PathVariable int id){
+    public ResponseEntity<String> deleteProductByID(@PathVariable long id){
         log.info("Searching for product with ID: {}", id);
         int result = productDAO.deleteProductByID(id);
         if (result > 0) {
@@ -90,7 +90,7 @@ public class ProductController {
     }
 
     @PutMapping(value="/update/image/{id}", consumes={"multipart/form-data"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> uploadImage(@PathVariable int id, @RequestPart("file") MultipartFile file){
+    public ResponseEntity<String> uploadImage(@PathVariable long id, @RequestPart("file") MultipartFile file){
         try {
             log.info("Uploading product with ID {} image", id);
             Product uploading = productDAO.findProductByID(id);
@@ -118,7 +118,7 @@ public class ProductController {
     }
 
     @PutMapping(value = "/update/{id}",  produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateProductInfoByID(@RequestBody Product product, @PathVariable int id){
+    public ResponseEntity<String> updateProductInfoByID(@RequestBody Product product, @PathVariable long id){
         log.info("Updating product by ID: {}", id);
         int result = productDAO.updateProductInfoByID(product, id);
         if (result > 0) {
@@ -131,7 +131,7 @@ public class ProductController {
     }
 
     @PutMapping(value = "/update/stock/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updateProductStockByID(@RequestBody Product product, @PathVariable int id){
+    public ResponseEntity<String> updateProductStockByID(@RequestBody Product product, @PathVariable long id){
         log.info("Updating stock of product with ID: {}", id);
         int result = productDAO.updateProductStockByID(product, id);
         if (result > 0) {

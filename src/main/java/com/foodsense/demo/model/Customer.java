@@ -22,6 +22,10 @@ public class Customer extends User{
 
     public Customer(){}
 
+    public Customer(String email, String fullName){
+        super(email,fullName);
+    }
+
     //this can retrieve customer id also
     public Customer(long customer_id, String email, String password, String phone_number, String fullname, String address, RoleCategory role, String imageUrl){
         super(email, password, phone_number, fullname, address, role);

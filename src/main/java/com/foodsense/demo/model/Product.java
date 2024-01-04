@@ -10,10 +10,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-// import jakarta.persistence.MapsId;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -21,22 +21,27 @@ import jakarta.persistence.Table;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @SequenceGenerator(name = "product_id")
+    @Column(name = "product_id")
     private long productId;
 
     @Column(name="product_name")
+    @NotEmpty(message="This attribute may not empty")
     private String productName;
 
     @Column(name="product_stock")
+    @NotNull(message="This attribute may not null")
     private int productStock;
 
     @Column(name="product_unit_price")
+    @NotNull(message="This attribute may not null")
     private double productUnitPrice;
 
     @Column(name="product_description")
+    @NotEmpty(message="This attribute may not empty")
     private String productDescription;
 
     @Column(name="product_is_food")
+    @NotNull(message="This attribute may not be null")
     private boolean isFood;
 
     @ManyToOne(fetch=FetchType.LAZY)

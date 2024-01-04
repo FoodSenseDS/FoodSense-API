@@ -1,6 +1,7 @@
 package com.foodsense.demo.controller;
 
 import com.foodsense.demo.dao.SellerDAO;
+import com.foodsense.demo.model.Product;
 import com.foodsense.demo.model.Seller;
 import com.foodsense.demo.blob.service.AzureBlobService;
 
@@ -50,7 +51,7 @@ public class SellerController {
     }
 
     @GetMapping(value = "/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Seller> findSellerByID(@PathVariable int id){
+    public ResponseEntity<Seller> findSellerByID(@PathVariable long id){
         log.info("Searching for seller with ID: {}", id);
         Seller seller = sellerDAO.findSellerByID(id);
         if(seller != null){
@@ -76,7 +77,7 @@ public class SellerController {
     }
 
     @DeleteMapping(value = "delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> deleteSellerByID(@PathVariable int id) {
+    public ResponseEntity<String> deleteSellerByID(@PathVariable long id) {
         log.info("Searching for seller with ID: {}", id);
         int result = sellerDAO.deleteSellerByID(id);
         if(result > 0){
@@ -89,7 +90,7 @@ public class SellerController {
     }
 
     @PutMapping(value="/update/image/{id}", consumes={"multipart/form-data"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> uploadImage(@PathVariable int id, @RequestPart("file") MultipartFile file) {
+    public ResponseEntity<String> uploadImage(@PathVariable long id, @RequestPart("file") MultipartFile file) {
         try {
             log.info("Updloading seller with ID {} image", id);
             Seller uploading = sellerDAO.findSellerByID(id);
@@ -127,6 +128,19 @@ public class SellerController {
         } else {
             log.warn("Failed updating seller with ID: {}", id);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No seller updated");
+        }
+    }
+
+    @GetMapping(value="/get/product/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Product>> getProductBySellerID(@PathVariable long id){
+        log.info("Fetch all product with specific seller {}", id);
+        List<Product> products = sellerDAO.findProductBySellerID(id);
+        if (!products.isEmpty()){
+            log.info("Get seller products");
+            return ResponseEntity.ok(products);
+        } else {
+            log.warn("Failed get seller products");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(products);
         }
     }
 }

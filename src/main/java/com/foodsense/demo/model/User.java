@@ -1,6 +1,7 @@
 package com.foodsense.demo.model;
 
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -11,25 +12,36 @@ import com.foodsense.demo.enumeration.RoleCategory;
 public class User extends Auth{
 
     @Column(name="email")
+    @NotEmpty(message="This attribute may not empty")
     private String email;
 
     @Column(name="password")
+    @NotEmpty(message="This attribute may not empty")
     private String password;
 
     @Column(name="phone_number")
+    @NotEmpty(message="This attribute may not empty")
     private String phone_number;    
 
     @Column(name="fullname")
+    @NotEmpty(message="This attribute may not empty")
     private String fullName;
 
     @Column(name="address")
+    @NotEmpty(message="This attribute may not empty")
     private String address;
 
     @Column(name="role")
+    @NotEmpty(message="This attribute may not empty")
     @Enumerated(EnumType.STRING)
     private RoleCategory role;
 
     public User(){}
+
+    public User(String email, String fullName){
+        setEmail(email);
+        setFullName(fullName);
+    }
 
     public User(String email, String password, String phone_number, String fullName, String address, RoleCategory role){
         setEmail(email);

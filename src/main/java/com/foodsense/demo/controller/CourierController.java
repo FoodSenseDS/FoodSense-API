@@ -2,6 +2,7 @@ package com.foodsense.demo.controller;
 
 import com.foodsense.demo.blob.service.AzureBlobService;
 import com.foodsense.demo.dao.CourierDAO;
+import com.foodsense.demo.dao.OrderDAO;
 import com.foodsense.demo.model.Courier;
 
 import java.io.IOException;
@@ -32,11 +33,14 @@ public class CourierController {
     private CourierDAO courierDAO;
 
     @Autowired
+    private OrderDAO orderDAO;
+
+    @Autowired
     private AzureBlobService azureBlobService;
 
     private static final Logger log = LoggerFactory.getLogger(CourierController.class);
 
-    @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value="/get", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Courier>> findAllCourier(){
         log.info("Fetching all courier...");
         List<Courier> couriers = courierDAO.findAllCourier();
@@ -49,7 +53,7 @@ public class CourierController {
         }
     }
 
-    @GetMapping(value = "/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value="/get/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Courier> findCourierByID(@PathVariable int id){
         log.info("Searching for courier with ID: {}", id);
         Courier courier = courierDAO.findCourierByID(id);
@@ -62,7 +66,7 @@ public class CourierController {
         }
     }
 
-    @PostMapping(value = "/insert", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value="/insert", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> insertCourier(@RequestBody Courier courier){
         log.info("Creating courier account...");
         int result = courierDAO.insertCourier(courier);
@@ -75,7 +79,7 @@ public class CourierController {
         }
     }
 
-    @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value="/delete/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> deleteCourierByID(@PathVariable int id){
         log.info("Searching for courier with ID: {}", id);
         int result = courierDAO.deleteCourierByID(id);
@@ -117,7 +121,7 @@ public class CourierController {
         }
     }
 
-    @PutMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value="/update/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateCourierByID(@RequestBody Courier courier, @PathVariable int id){
         log.info("Updating courier bu ID: {}", id);
         int result = courierDAO.updateCourierByID(courier, id);
@@ -127,6 +131,19 @@ public class CourierController {
         } else {
             log.warn("Failed updating courier with ID: {}", id);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No courier updated");
+        }
+    }
+
+    @PutMapping(value="/takeOrder/{courierId}/order/{orderId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> deliverOrder(@PathVariable long courierId, @PathVariable long orderId){
+        log.info("Taking customer order...");
+        int result = orderDAO.updateOrder(courierId, orderId);
+        if (result > 0) {
+            log.info("Order {} has been taken", orderId);
+            return ResponseEntity.ok("Courier is delivering the items");
+        } else {
+            log.info("The order {} can't be taken", orderId);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No order can be taken");
         }
     }
 }

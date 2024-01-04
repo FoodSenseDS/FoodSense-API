@@ -13,13 +13,18 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
+import com.foodsense.demo.model.Product;
 import com.foodsense.demo.model.Seller;
+import com.foodsense.demo.repository.ProductJPARepo;
 import com.foodsense.demo.service.SellerService;
 
 @Repository
 public class SellerDAO implements SellerService{
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private ProductJPARepo productJPARepo;
 
     @Override
     public List<Seller> findAllSeller(){
@@ -111,5 +116,10 @@ public class SellerDAO implements SellerService{
         params.addValue("id",id);
 
         return namedParameterJdbcTemplate.update(query,params);
+    }
+
+    @Override
+    public List<Product> findProductBySellerID(long id){
+        return productJPARepo.findProductBySellerID(id);
     }
 }
