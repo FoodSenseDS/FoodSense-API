@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.foodsense.demo.dao.CustomerDAO;
 import com.foodsense.demo.dao.OrderDAO;
+import com.foodsense.demo.dao.ProductDAO;
 import com.foodsense.demo.dto.request.OrderRequestDTO;
 import com.foodsense.demo.dto.response.OrderResponseDTO;
 import com.foodsense.demo.helper.DateHelper;
 import com.foodsense.demo.model.Customer;
 import com.foodsense.demo.model.Order;
+import com.foodsense.demo.model.OrderItem;
+import com.foodsense.demo.model.Product;
 
 @RestController
 @RequestMapping("/foodsense/api/v0.0.1/order")
@@ -33,6 +36,9 @@ public class OrderController {
 
     @Autowired
     private CustomerDAO customerDAO;
+
+    @Autowired
+    private ProductDAO productDAO;
 
     private static final Logger log = LoggerFactory.getLogger(OrderController.class);
 

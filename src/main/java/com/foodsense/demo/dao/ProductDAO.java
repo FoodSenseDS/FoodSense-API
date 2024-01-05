@@ -116,7 +116,7 @@ public class ProductDAO implements ProductService{
             params.addValue("product_is_food", false);
         }
 
-        query = query.substring(0, query.lastIndexOf(","));
+        query = query.substring(0, query.lastIndexOf(",")) + " WHERE product_id=:id";
         params.addValue("id", id);
 
         return namedParameterJdbcTemplate.update(query, params);
