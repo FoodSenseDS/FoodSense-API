@@ -97,4 +97,8 @@ public class Order {
     public void setOrderItem(List<OrderItem> orderItems){
         this.orderItems = orderItems;
     }
+
+    public void isOrderrer(boolean orderStatus){
+        this.orderStatus = orderStatus;
+    }
 }

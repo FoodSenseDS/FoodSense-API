@@ -50,7 +50,7 @@ public class OrderDAO implements OrderService{
 
         for (OrderItem oi : orderItems) {
             long prodductId = oi.getProductId();
-            Optional<Product> product = productJPARepo.findById(prodductId);
+            Optional<Product> product = productJPARepo.findById(prodductId);sss
             if (product.isPresent()) {
                 Product productInit = product.get();
                 if (productInit.getProductStock() < oi.getQuantity()) {
